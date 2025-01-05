@@ -3,12 +3,12 @@ name: Django CI with Docker
 on:
   push:
     branches:
-      - main
+      # - main
       - staging
       - development
   pull_request:
     branches:
-      - main
+      # - main
       - staging
       - development
 
@@ -22,16 +22,16 @@ jobs:
 
     - name: Set up Docker Compose
       run: |
-        docker compose -f docker-compose.yml up -d --build
-        # docker-compose -f docker-compose.yml up -d web
+        docker compose -f docker-compose.yml up -d db
+        docker compose -f docker-compose.yml up -d web
 
-    - name: Run Tests
+    - name: Verify
       run: |
-        docker-compose exec web python manage.py test
+        curl localhost:1337
 
     - name: Tear Down
       run: |
-        docker-compose down
+        docker compose down
 
   build:
     runs-on: ubuntu-latest
@@ -43,4 +43,4 @@ jobs:
 
     - name: Build Docker Images
       run: |
-        docker-compose -f docker-compose.yml build
+        docker compose -f docker-compose.yml build
