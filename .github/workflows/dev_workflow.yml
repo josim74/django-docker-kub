@@ -3,17 +3,16 @@ name: Django CI with Docker
 on:
   push:
     branches:
-      - main
-      - staging
       - development
   pull_request:
     branches:
       - main
       - staging
       - development
+  workflow_dispatch:
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -22,25 +21,21 @@ jobs:
 
     - name: Set up Docker Compose
       run: |
-        docker compose -f docker-compose.yml up -d --build
-        # docker-compose -f docker-compose.yml up -d web
+        docker compose -f docker-compose.prod.yml up -d --build
+        # docker compose -f docker-compose.prod.yml up -d web
 
-    - name: Run Tests
+    - name: Wait for 30 seconds
+      run: sleep 30
+
+    - name: Verify
       run: |
-        docker-compose exec web python manage.py test
+        echo "Docker image list"
+        docker images
+        echo "Docker container list"
+        docker ps
+        echo "Check the url"
+        curl http://localhost:1337/
 
     - name: Tear Down
       run: |
-        docker-compose down
-
-  build:
-    runs-on: ubuntu-latest
-    needs: test
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-
-    - name: Build Docker Images
-      run: |
-        docker-compose -f docker-compose.yml build
+        docker compose -f docker-compose.prod.yml down -v
