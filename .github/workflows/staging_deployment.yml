@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -30,9 +30,9 @@ jobs:
         echo "Check the url"
         curl http://localhost:1337/
 
-    # - name: Tear Down
-    #   run: |
-    #     docker compose -f docker-compose.prod.yml down -v
+    - name: Tear Down
+      run: |
+        docker compose -f docker-compose.prod.yml down -v
 
     # - name: Log in to Docker Hub
     #   uses: docker/login-action@v2
