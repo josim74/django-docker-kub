@@ -42,7 +42,7 @@ jobs:
 
     - name: Tag and Push Docker Image
       run: |
-        docker tag django-docker-kub-web ${{ secrets.DOCKER_USERNAME }}/django-projects:web-${GITHUB_RUN_NUMBER}
+        docker tag django-docker-kub-web ${{ secrets.DOCKER_USERNAME }}/django-projects:web-v1.0.${GITHUB_RUN_NUMBER}
         docker tag django-docker-kub-web ${{ secrets.DOCKER_USERNAME }}/django-projects:web-latest
         docker push ${{ secrets.DOCKER_USERNAME }}/django-projects:web-v1.0.${GITHUB_RUN_NUMBER}
         docker push ${{ secrets.DOCKER_USERNAME }}/django-projects:web-latest
