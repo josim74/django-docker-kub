@@ -11,6 +11,7 @@ on:
       # - main
       - staging
       - development
+  workflow_dispatch:
 
 jobs:
   test:
@@ -25,9 +26,17 @@ jobs:
         docker compose -f docker-compose.prod.yml up -d --build
         # docker compose -f docker-compose.prod.yml up -d web
 
+    - name: Wait for 30 seconds
+      run: sleep 30
+      
     - name: Verify
       run: |
-        curl localhost:1337
+        echo "Docker image list"
+        docker images
+        echo "Docker container list"
+        docker ps
+        echo "Check the url"
+        curl http://localhost:1337/
 
     - name: Tear Down
       run: |
