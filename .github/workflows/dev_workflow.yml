@@ -1,4 +1,4 @@
-name: Django CI with Docker
+name: Development test
 
 on:
   push:
@@ -12,7 +12,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
     steps:
