@@ -22,8 +22,8 @@ jobs:
 
     - name: Set up Docker Compose
       run: |
-        docker compose -f docker-compose.yml up -d db
-        docker compose -f docker-compose.yml up -d web
+        docker compose -f docker-compose.prod.yml up -d --build
+        # docker compose -f docker-compose.prod.yml up -d web
 
     - name: Verify
       run: |
@@ -31,7 +31,7 @@ jobs:
 
     - name: Tear Down
       run: |
-        docker compose down
+        docker -f docker-compose.prod.yml down -v
 
   build:
     runs-on: ubuntu-latest
