@@ -22,8 +22,8 @@ jobs:
 
     - name: Set up Docker Compose
       run: |
-        docker-compose -f docker-compose.yml up -d db
-        docker-compose -f docker-compose.yml up -d web
+        docker-compose -f docker compose.yml up -d --build
+        # docker-compose -f docker-compose.yml up -d web
 
     - name: Run Tests
       run: |
